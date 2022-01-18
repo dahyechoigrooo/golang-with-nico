@@ -69,10 +69,10 @@ func getPage(page int, url string, mainC chan<- []extractedJob) {
 // 각 취업 공고의 정보를 스크래핑하는 함수(struct 반환)
 func extractJob(card *goquery.Selection, c chan<- extractedJob) {
 	id, _ := card.Attr("data-jk")
-	title := cleanString(card.Find(".jobTitle>span").Text())
-	location := cleanString(card.Find(".companyLocation").Text())
-	salary := cleanString(card.Find(".salary-snippet span").Text())
-	summary := cleanString(card.Find(".job-snippet").Text())
+	title := CleanString(card.Find(".jobTitle>span").Text())
+	location := CleanString(card.Find(".companyLocation").Text())
+	salary := CleanString(card.Find(".salary-snippet span").Text())
+	summary := CleanString(card.Find(".job-snippet").Text())
 	c <- extractedJob{
 		id:       id,
 		title:    title,
@@ -82,7 +82,8 @@ func extractJob(card *goquery.Selection, c chan<- extractedJob) {
 }
 
 // 공백을 제거해주는 함수
-func cleanString(str string) string {
+// CleaString clean a string
+func CleanString(str string) string {
 	return strings.Join(strings.Fields(strings.TrimSpace(str)), " ")
 }
 
